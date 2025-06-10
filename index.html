@@ -1,1 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="kitsunera">
+    <meta property="og:description" content="network penetration tester/ethical hacker">
+    <meta property="og:image" content="https://i.pinimg.com/736x/cd/96/ee/cd96ee79126a8b2f8ddb8773329ea46e.jpg">
+    <meta property="og:url" content="https://kitsunera.github.io">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#b8d4d6">
+    <title>kitsu <3</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
 
+        :root {
+            --bg-dark: #121212;
+            --bg-darker: #0a0a0a;
+            --bg-white: #dfdfdf;
+            --bg-light: #e8e8ed;
+            --accent-pink: #ff5ebc;
+            --accent-blue: #5e9fff;
+            --text-primary: #f0f0f0;
+            --text-secondary: #a9a9b3;
+            --text-dark: #333333;
+            --text-light: #555555;
+        }
+
+        body.white-mode {
+            background-color: var(--bg-white);
+            color: var(--text-dark);
+        }
+
+
+        .white-mode .terminal {
+            border: 1px solid rgba(255, 94, 188, 0.4);
+            background-color: var(--bg-light);
+        }
+
+
+        .white-mode .connect {
+            background-color: rgba(232, 232, 237, 0.9);
+        }
+
+        .white-mode footer {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background-color 1.2s ease, color 1.8s ease;
+        }
+
+        header, .connect, footer, .skill-card, .project-card, .hero-subtitle, .terminal {
+            transition: all 1.2s ease;
+        }
+                
+       
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.12'/%3E%3C/svg%3E");
+            z-index: -1;
+            opacity: 0.025;
+            pointer-events: none;
+        }
+        
+        header {
+            padding: 2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            transition: all 0.8s ease;
+        }
+        
+        .white-mode header {
+            color: var(--text-dark);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            position: relative;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logo::before {
+            content: "Kitsu";
+            position: absolute;
+            left: 0;
+            text-shadow: 0 0 15px var(--accent-pink);
+            opacity: 0.3;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .white-mode nav ul li a {
+            color: var(--text-dark);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-blue));
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--text-primary);
+        }
+        
+        .white-mode nav ul li a:hover {
+            color: var(--accent-pink);
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            padding: 2rem 8rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            width: 60%;
+            z-index: 1;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            position: relative;
+        }
+        
+        .hero-title span {
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+        
+        .hero-title span::before {
+            content: "Kitsu";
+            position: absolute;
+            left: 0;
+            text-shadow: 0 0 15px var(--accent-pink);
+            opacity: 0.3;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+        .white-mode .hero-subtitle {
+            color: var(--text-dark);
+        }
+        
+        .terminal {
+            position: absolute;
+            right: 8rem;
+            width: 35%;
+            min-height: 300px;
+            background-color: var(--bg-darker);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+            border: 1px solid rgba(255, 94, 188, 0.2);
+        }
+        
+        
+        
+        .terminal-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ff5f56;
+        }
+        
+        .terminal-dot:nth-child(2) {
+            background-color: #ffbd2e;
+        }
+        
+        .terminal-dot:nth-child(3) {
+            background-color: #27c93f;
+        }
+        
+        .terminal-content {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .white-mode .terminal-content {
+            color: #666;
+        }
+        
+        .terminal-line {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .terminal-prompt {
+            color: var(--accent-pink);
+            margin-right: 8px;
+        }
+        
+        .terminal-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background-color: var(--accent-pink);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        
+        .skills {
+            padding: 6rem 8rem;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .white-mode .section-title {
+            color: var(--text-dark);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-blue));
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .skill-card {
+            background-color: rgba(13, 12, 19, 0.5);
+            border: 1px solid rgba(255, 94, 188, 0.1);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .white-mode .skill-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 94, 188, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 94, 188, 0.1);
+            border-color: rgba(255, 94, 188, 0.3);
+        }
+        
+        .white-mode .skill-card:hover {
+            box-shadow: 0 10px 20px rgba(255, 94, 188, 0.2);
+        }
+        
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .skill-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .white-mode .skill-title {
+            color: var(--text-dark);
+        }
+        
+        .skill-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .white-mode .skill-description {
+            color: #666;
+        }
+        
+        .projects {
+            padding: 2rem 8rem 6rem;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background-color: rgba(13, 12, 19, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 94, 188, 0.1);
+        }
+        
+        .white-mode .project-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 94, 188, 0.2);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 94, 188, 0.1);
+            border-color: rgba(255, 94, 188, 0.3);
+        }
+        
+        .white-mode .project-card:hover {
+            box-shadow: 0 10px 20px rgba(255, 94, 188, 0.2);
+        }
+        
+        .project-img {
+            width: 100%;
+            height: 200px;
+            background-color: var(--bg-darker);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            background: linear-gradient(135deg, rgba(255, 94, 188, 0.1), rgba(94, 159, 255, 0.1));
+        }
+        
+        .white-mode .project-img {
+            background: linear-gradient(135deg, rgba(255, 94, 188, 0.05), rgba(94, 159, 255, 0.05));
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+        }
+        
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .white-mode .project-title {
+            color: var(--text-dark);
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .project-tag {
+            background: linear-gradient(90deg, rgba(255, 94, 188, 0.2), rgba(94, 159, 255, 0.2));
+            color: var(--text-secondary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .white-mode .project-tag {
+            color: #666;
+        }
+        
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .white-mode .project-description {
+            color: #666;
+        }
+        
+        .project-link {
+            color: var(--accent-pink);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .project-link:hover {
+            color: var(--accent-blue);
+        }
+        
+        .project-link span {
+            margin-left: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-link:hover span {
+            transform: translateX(5px);
+        }
+        
+        .connect {
+            padding: 4rem 8rem;
+            background-color: rgba(6, 6, 9, 0.8);
+            text-align: center;
+            transition: all 0.8s ease;
+        }
+        
+        
+        
+        .connect-icons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .connect-icon {
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .white-mode .connect-icon {
+            color: #666;
+        }
+        
+        .connect-icon:hover {
+            color: var(--accent-pink);
+            transform: translateY(-5px);
+        }
+        
+        footer {
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background-color: var(--bg-darker);
+            transition: all 0.8s ease;
+        }
+        
+        .white-mode footer {
+            background-color: #f1f1f1;
+            color: #666;
+        }
+        
+        .highlight {
+            color: var(--accent-pink);
+        }
+        
+        .btn {
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-blue));
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 94, 188, 0.3);
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        @media (max-width: 1200px) {
+            .hero {
+                padding: 2rem 4rem;
+                flex-direction: column;
+                gap: 3rem;
+            }
+            
+            .hero-content {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .hero-subtitle {
+                margin: 0 auto 2rem;
+            }
+            
+            .terminal {
+                position: relative;
+                right: auto;
+                width: 100%;
+                margin-top: 2rem;
+            }
+            
+            .skills, .projects {
+                padding: 4rem 4rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .hero {
+                padding: 1rem 1.5rem;
+                min-height: auto;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .skills, .projects, .connect {
+                padding: 3rem 1.5rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+    <div class="noise"></div>
+    
+
+    <header>
+        <div class="logo">Kitsu</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#connect">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">Hi, I'm <span>Kitsu</span></h1>
+            <p class="hero-subtitle">Ethical hacker and penetration tester from Russia, specializing in bug bounties, red teaming, and network penetration testing. Enthusiast of website exploiting, front-end development, scripting, and currently diving into malware development</p>
+            <a href="#projects" class="btn">View Projects</a>
+        </div>
+        
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-dot"></div>
+                <div class="terminal-dot"></div>
+                <div class="terminal-dot"></div>
+            </div>
+            <div class="terminal-content">
+                <span class="terminal-line"><span class="terminal-prompt">$</span> whoami</span>
+                <span class="terminal-line">a cute little fox <br>
+⣿⣿⣿⣿⣿⡿⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⠇⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⡟⢠⣧⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⡏⢠⣿⣿⣷⣄⠈⠛⠛⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⠟⢠⣿⣿⣿⣿⣿⣷⡄⢀⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⠏⢠⣿⣿⣿⣿⣿⣿⣿⣿⣄⣇⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⡏⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆⠸⣿⠟⠻⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠿⣿⣿⣿⣿⣿⣿⣿
+⠁⢾⡿⠟⣋⣭⣍⠛⠟⣉⣴⣌⠛⠇⠀⠏⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿
+⠀⣠⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⠂⣰⠀⢀⡀⠀⠀⠀⠈⠻⣿⣿⣿⣿⡟⠁⠀⠀⠀⣴⡆⢸⣿⣿⣿⣿⣿⣿⣿
+⡆⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⢠⣿⠀⣾⣿⣦⠀⢤⣤⡀⢉⣉⣉⣉⠀⠻⠿⠏⣼⣿⡇⢸⣿⣿⣿⣿⣿⣿
+⣷⡈⢿⣿⣿⣿⣿⣿⣿⣿⣿⡏⢀⣾⣿⠀⣿⣿⣿⣷⡈⢿⣧⣤⣿⣿⣿⣿⣷⣶⣌⠻⣿⡇⢸⣿⣿⣿⣿⣿⣿
+⣿⣷⡀⠙⢿⣿⣿⣿⣿⣿⡿⠀⠸⠿⣿⡄⣿⣿⣿⣿⡏⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣌⠁⣼⣿⠛⠛⠻⣿⣿
+⣿⣿⣿⣶⣄⡉⠻⠟⠋⣡⣤⣶⣶⣦⣄⡁⠸⣿⡿⠏⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⢻⣿⠀⡖⢀⠀⢹
+⣿⣿⣿⣿⠟⠋⣠⣶⣿⣿⣿⣿⣿⣿⣿⣿⡆⢈⣡⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⢸⣿⠀⠠⠊⢀⣾
+⣿⡿⠟⢁⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠸⣿⣿⣿⠋⠀⣿⣿⣿⣿⣿⣿⡟⠉⣿⣿⠇⢸⣿⣦⣴⣾⣿⣿
+⡇⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⠻⠷⠿⠦⠾⣿⣿⠉⠁⢉⣿⣄⣀⣿⡟⠀⠾⢿⣿⣿⣿⣿⣿
+⣷⣤⣄⣀⣉⣉⣉⢛⠛⠛⠛⠻⠿⠛⠿⠟⠛⠿⠿⠆⠀⠀⠀⠀⠛⠂⠀⠋⠉⠉⢙⡃⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿</span>
+                
+            </div>
+        </div>
+    </section>
+    
+    <section class="skills" id="skills">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-bug"></i></div>
+                <h3 class="skill-title">Bug-bounty Hunting</h3>
+                <p class="skill-description">Finding vulnerabilities inside systems and network firmware. I have made around $3.9k by finding bugs. My next goal is to receive the Discord bughunter badge.</p>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-globe"></i></div>
+                <h3 class="skill-title">Web Exploitation</h3>
+                <p class="skill-description">Doing CTFs and pwning machines competitively is a pretty big hobby of mine, which I am currently active in.</p>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-network-wired"></i></div>
+                <h3 class="skill-title">Network penetration testing</h3>
+                <p class="skill-description">Attack strategies for network infrastructure, including firewall/IDS bypass, traffic analysis and interception. Experienced in wireless network penetration and exploiting network services.</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fa-brands fa-python"></i></div>
+                <h3 class="skill-title">Programming/Automation</h3>
+                <p class="skill-description">4+ years of using python for penetration testing including working with multiple libraries, primarily scapy and flask. Also front-end development, and learning C for malware development.</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fa-solid fa-memory"></i></div>
+                <h3 class="skill-title">Firmware/MCU Development</h3>
+                <p class="skill-description">Working and creating DIY projects to test surroundings on a more external level such as working with raspberry-pi microcontrollers and ESP boards.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="projects" id="projects">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-img">
+                    <i class="fa-solid fa-moon"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title"><span style="color:rgb(182, 182, 1)">Work in Progress: </span>nightshell</h3>
+                    <div class="project-tags">
+                        <span class="project-tag">Malware-Development</span>
+                        <span class="project-tag">Operational Security</span>
+                    </div>
+                    <p class="project-description">A completely untraceable RAT, routed through the tor network, with no interaction with exit nodes. Made to become resilient and untraceable from goverment units including the FBI, CIA and other. Includes end-to-end encryption to avoid compromised nodes, and encrypted file transfer.</p>
+                    <a href="#projects" class="project-link" style="color: red;">Work in progress - Limited access due to ethics and legal reasons. </a>
+                </div>
+            </div>
+
+            
+            
+            <div class="project-card">
+                <div class="project-img">
+                    <i class="fa-solid fa-circle-nodes" style="color: var(--accent-blue);"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">URL-Mirror</h3>
+                    <div class="project-tags">
+                        <span class="project-tag">Anonymization</span>
+                        <span class="project-tag">Containerization</span>
+                        <span class="project-tag">Anti-Phishing</span>
+                    </div>
+                    <p class="project-description">URL-mirror is a free service that sandboxes web pages, allowing users to safely view potentially malicious or phishing links without risk. It also helps bypass censorship, providing access to unbiased news in restricted regions by routing the content through an American proxy.</p>
+                    <a href="https://kvts.vercel.app" target="_blank" class="project-link">Visit website <span>→</span></a>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-img">
+                    <i class="fa-solid fa-bug" style="color: red;"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">nekolyze</h3>
+                    <div class="project-tags">
+                        <span class="project-tag">Malware Analysis</span>
+                        <span class="project-tag">Incident Response</span>
+                    </div>
+                    <p class="project-description">another WIP project that offers YARA based file scanning, trained on over 15,000 rules, providing quick and precise detection of algorithms within files, detecting goverment-used viruses, as well as other types of malware.</p>
+                    <a href="https://nekolyze.vercel.app" target="_blank" class="project-link">Visit website <span>→</span></a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-img">
+                    <i class="fa-solid fa-shield-cat" style="color: var(--accent-pink);"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">nmap-kitty</h3>
+                    <div class="project-tags">
+                        <span class="project-tag">Reconnaissance</span>
+                        <span class="project-tag">Website/Networks</span>
+                        <span class="project-tag">Cheat-Sheet</span>
+                    </div>
+                    <p class="project-description">A simple quality of life tool to craft nmap commands with ease, Includes every argument which you can select with a single click to then copy the command to run. A very useful tool for beginners to learn the arguments, and for experts to use as a quality of life tool.</p>
+                    <a href="https://nmapkitty.vercel.app" target="_blank" class="project-link">Visit website <span>→</span></a>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-img">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">kitsu-picoscripts</h3>
+                    <div class="project-tags">
+                        <span class="project-tag">MCU modifications</span>
+                        <span class="project-tag">BadUSB</span>
+                        <span class="project-tag">Penetration Testing</span>
+                    </div>
+                    <p class="project-description">A simple python compatibility layer for the CircuitPython firmware, to allow easy payload scripting and HID spoofing. With support for both US and UK keymapping. </p>
+                    <a href="https://github.com/kitsunera/kitsu-picoscripts" target="_blank" class="project-link">View code <span>→</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="connect" id="connect">
+        <h2 class="section-title">Contacts</h2>
+        <p>You can view more projects, interact with my community, or donate using the buttons below:</p>
+        <div class="connect-icons">
+            <a href="https://github.com/kitsunera" class="connect-icon"><i class="fab fa-github"></i></a>
+            <a href="https://discord.gg/nnCjAzfctV" class="connect-icon"><i class="fab fa-discord"></i></a>
+            <a href="https://ko-fi.com/kitsunera" class="connect-icon"><i class="fa-solid fa-mug-hot"></i></a>
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2025 kitsu/kvts all rights reserved ;3 | <span class="highlight">Built with love, by the best femboy</span></p>
+    </footer>
+    
+    <script>
+        const terminalContent = document.querySelector('.terminal-content');
+        const terminalCursor = document.createElement('span');
+        terminalCursor.classList.add('terminal-cursor');
+        terminalContent.appendChild(terminalCursor);
+        
+
+        window.addEventListener('scroll', function() {
+            const skillsSection = document.querySelector('#projects');
+            const skillsPosition = skillsSection.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.5;
+            
+            if (skillsPosition < screenPosition) {
+                document.body.classList.add('white-mode');
+            } else {
+                document.body.classList.remove('white-mode');
+            }
+        });
+    </script>
+</body>
+</html>
