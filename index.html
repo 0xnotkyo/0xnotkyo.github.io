@@ -1,1 +1,822 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="0xnotkyo">
+    <meta property="og:description" content="ethical hacker">
+    <meta property="og:image" content="https://0xnotkyo.github.io/assets/images/0xnotkyo.png">
+    <meta property="og:url" content="https://0xnotkyo.github.io">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#b8d4d6">
+    <title>0xnotkyo</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
 
+        :root {
+            --bg-dark: #121212;
+            --bg-darker: #0a0a0a;
+            --bg-white: #dfdfdf;
+            --bg-light: #e8e8ed;
+            --accent-pink: #ff5ebc;
+            --accent-blue: #5e9fff;
+            --text-primary: #f0f0f0;
+            --text-secondary: #a9a9b3;
+            --text-dark: #333333;
+            --text-light: #555555;
+        }
+
+        body.white-mode {
+            background-color: var(--bg-white);
+            color: var(--text-dark);
+        }
+
+
+        .white-mode .terminal {
+            border: 1px solid rgba(232, 232, 237, 0.9);
+            background-color: var(--bg-light);
+        }
+
+
+        .white-mode .connect {
+            background-color: rgba(232, 232, 237, 0.9);
+        }
+
+        .white-mode footer {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background-color 1.2s ease, color 1.8s ease;
+        }
+
+        header, .connect, footer, .skill-card, .project-card, .hero-subtitle, .terminal {
+            transition: all 1.2s ease;
+        }
+                
+       
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.12'/%3E%3C/svg%3E");
+            z-index: -1;
+            opacity: 0.025;
+            pointer-events: none;
+        }
+        
+        header {
+            padding: 2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            transition: all 0.8s ease;
+        }
+        
+        .white-mode header {
+            color: var(--text-dark);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            position: relative;
+            background: linear-gradient(90deg, var(--bg-white), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logo::before {
+            content: "0xnotkyo";
+            position: absolute;
+            left: 0;
+            text-shadow: 0 0 15px var(--bg-dark);
+            opacity: 0.3;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        .white-mode nav ul li a {
+            color: var(--text-dark);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, var(--bg-white), var(--accent-blue));
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--text-primary);
+        }
+        
+        .white-mode nav ul li a:hover {
+            color: var(--accent-blue);
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            padding: 2rem 8rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            width: 60%;
+            z-index: 1;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            position: relative;
+        }
+        
+        .hero-title span {
+            background: linear-gradient(90deg, var(--bg-white), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+        
+        .hero-title span::before {
+            content: "0xnotkyo";
+            position: absolute;
+            left: 0;
+            text-shadow: 0 0 15px var(--bg-dark);
+            opacity: 0.3;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+        .white-mode .hero-subtitle {
+            color: var(--text-dark);
+        }
+        
+        .terminal {
+            position: absolute;
+            right: 8rem;
+            width: 35%;
+            min-height: 300px;
+            background-color: var(--bg-darker);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+            border: 1px solid rgba(232, 232, 237, 0.9);
+        }
+        
+        
+        
+        .terminal-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ff5f56;
+        }
+        
+        .terminal-dot:nth-child(2) {
+            background-color: #ffbd2e;
+        }
+        
+        .terminal-dot:nth-child(3) {
+            background-color: #27c93f;
+        }
+        
+        .terminal-content {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .white-mode .terminal-content {
+            color: #666;
+        }
+        
+        .terminal-line {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .terminal-prompt {
+            color: var(--bg-white);
+            margin-right: 8px;
+        }
+        
+        .terminal-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background-color: var(--accent-blue);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        
+        .skills {
+            padding: 6rem 8rem;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .white-mode .section-title {
+            color: var(--text-dark);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--bg-light), var(--accent-blue));
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .skill-card {
+            background-color: rgba(13, 12, 19, 0.5);
+            border: 1px solid rgba(232,232,237,0.9);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .white-mode .skill-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(152, 184, 214, 0.9);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(232,232,237,0.9);
+            border-color: rgba(255,255,255,0.8);
+        }
+        
+        .white-mode .skill-card:hover {
+            box-shadow: 0 10px 20px rgba(152, 184, 214, 0.9);
+        }
+        
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .skill-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .white-mode .skill-title {
+            color: var(--text-dark);
+        }
+        
+        .skill-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .white-mode .skill-description {
+            color: #666;
+        }
+        
+        .projects {
+            padding: 2rem 8rem 6rem;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background-color: rgba(13, 12, 19, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 94, 188, 0.1);
+        }
+        
+        .white-mode .project-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(152, 184, 214, 0.9);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 94, 188, 0.1);
+            border-color: rgba(152, 184, 214, 0.9);
+        }
+        
+        .white-mode .project-card:hover {
+            box-shadow: 0 10px 20px rgba(152, 184, 214, 0.9);
+        }
+        
+        .project-img {
+            width: 100%;
+            height: 200px;
+            background-color: var(--bg-darker);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(94, 159, 255, 0.1));
+        }
+        
+        .white-mode .project-img {
+            background: linear-gradient(135deg, rgba(94, 159, 255, 0.05), rgba(94, 159, 255, 0.05));
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+        }
+        
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .white-mode .project-title {
+            color: var(--text-dark);
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .project-tag {
+            background: linear-gradient(90deg, rgba(212, 219, 219, 0.05), rgba(94, 159, 255, 0.2));
+            color: var(--text-secondary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .white-mode .project-tag {
+            color: #666;
+        }
+        
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .white-mode .project-description {
+            color: #666;
+        }
+        
+        .project-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .project-link:hover {
+            color: var(--accent-blue);
+        }
+        
+        .project-link span {
+            margin-left: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .project-link:hover span {
+            transform: translateX(5px);
+        }
+        
+        .connect {
+            padding: 4rem 8rem;
+            background-color: rgba(6, 6, 9, 0.8);
+            text-align: center;
+            transition: all 0.8s ease;
+        }
+        
+        
+        
+        .connect-icons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .connect-icon {
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .white-mode .connect-icon {
+            color: #666;
+        }
+        
+        .connect-icon:hover {
+            color: var(--accent-blue);
+            transform: translateY(-5px);
+        }
+        
+        footer {
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            background-color: var(--bg-darker);
+            transition: all 0.8s ease;
+        }
+        
+        .white-mode footer {
+            background-color: #f1f1f1;
+            color: #666;
+        }
+        
+        .highlight {
+            color: var(--accent-blue);
+        }
+        
+        .btn {
+            background: linear-gradient(90deg, var(--bg-white), var(--accent-blue));
+            color: rgb(44, 43, 43);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(152, 184, 214, 0.9);
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        @media (max-width: 1200px) {
+            .hero {
+                padding: 2rem 4rem;
+                flex-direction: column;
+                gap: 3rem;
+            }
+            
+            .hero-content {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .hero-subtitle {
+                margin: 0 auto 2rem;
+            }
+            
+            .terminal {
+                position: relative;
+                right: auto;
+                width: 100%;
+                margin-top: 2rem;
+            }
+            
+            .skills, .projects {
+                padding: 4rem 4rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .hero {
+                padding: 1rem 1.5rem;
+                min-height: auto;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .skills, .projects, .connect {
+                padding: 3rem 1.5rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+    <div class="noise"></div>
+    
+
+    <header>
+        <div class="logo">0xnotkyo</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#connect">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">Hi, I'm <span>0xnotkyo</span></h1>
+            <p class="hero-subtitle">Ethical hacker and Red Teamer from Spain, passionate about cybersecurity. Enthusiast of website exploitation, scripting, bug bounties, and malware development.</p>
+            <a href="#projects" class="btn">View Projects</a>
+        </div>
+        
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-dot"></div>
+                <div class="terminal-dot"></div>
+                <div class="terminal-dot"></div>
+            </div>
+            <div class="terminal-content">
+                <span class="terminal-line"><span class="terminal-prompt">$</span> whoami</span>
+                <span class="terminal-line">0xnotkyo<br>
+
+⣿⣿⣿⣿⣯⣿⣿⠄⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠈⣿⣿⣿⣿⣿⣿⣆⠄
+⢻⣿⣿⣿⣾⣿⢿⣢⣞⣿⣿⣿⣿⣷⣶⣿⣯⣟⣿⢿⡇⢃⢻⣿⣿⣿⣿⣿⢿⡄
+⠄⢿⣿⣯⣏⣿⣿⣿⡟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣧⣾⢿⣮⣿⣿⣿⣿⣾⣷
+⠄⣈⣽⢾⣿⣿⣿⣟⣄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣝⣯⢿⣿⣿⣿⣿
+⣿⠟⣫⢸⣿⢿⣿⣾⣿⢿⣿⣿⢻⣿⣿⣿⢿⣿⣿⣿⢸⣿⣼⣿⣿⣿⣿⣿⣿⣿
+⡟⢸⣟⢸⣿⠸⣷⣝⢻⠘⣿⣿⢸⢿⣿⣿⠄⣿⣿⣿⡆⢿⣿⣼⣿⣿⣿⣿⢹⣿
+⡇⣿⡿⣿⣿⢟⠛⠛⠿⡢⢻⣿⣾⣞⣿⡏⠖⢸⣿⢣⣷⡸⣇⣿⣿⣿⢼⡿⣿⣿
+⣡⢿⡷⣿⣿⣾⣿⣷⣶⣮⣄⣿⣏⣸⣻⣃⠭⠄⠛⠙⠛⠳⠋⣿⣿⣇⠙⣿⢸⣿
+⠫⣿⣧⣿⣿⣿⣿⣿⣿⣿⣿⣿⠻⣿⣾⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣹⢷⣿⡼⠋
+⠄⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⣿⣿⣿⠄⠄
+⠄⠄⢻⢹⣿⠸⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣼⣿⣿⣿⣿⡟⠄⠄
+⠄⠄⠈⢸⣿⠄⠙⢿⣿⣿⣹⣿⣿⣿⣿⣟⡃⣽⣿⣿⡟⠁⣿⣿⢻⣿⣿⢿⠄⠄
+⠄⠄⠄⠘⣿⡄⠄⠄⠙⢿⣿⣿⣾⣿⣷⣿⣿⣿⠟⠁⠄⠄⣿⣿⣾⣿⡟⣿⠄⠄
+⠄⠄⠄⠄⢻⡇⠸⣆⠄⠄⠈⠻⣿⡿⠿⠛⠉⠄⠄⠄⠄⢸⣿⣇⣿⣿⢿⣿⠄⠄</span>
+                
+            </div>
+        </div>
+    </section>
+    
+    <section class="skills" id="skills">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fa-brands fa-linux"></i></div>
+                <h3 class="skill-title">Linux</h3>
+                <p class="skill-description">Comfortable navigating and working in Linux-based environments. Daily use of command-line tools, bash scripting, and system interaction.</p>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-globe"></i></div>
+                <h3 class="skill-title">CTFs</h3>
+                <p class="skill-description">Doing CTFs and pwning machines is a pretty big hobby of mine — it’s one of my favorite ways to improve my skills.</p>
+            </div>
+            
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fas fa-network-wired"></i></div>
+                <h3 class="skill-title">Web Exploitation</h3>
+                <p class="skill-description">Interest and practice in identifying and exploiting vulnerabilities in web applications to understand weaknesses and how to protect them.</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fa-brands fa-python"></i></div>
+                <h3 class="skill-title">Programming/Automation</h3>
+                <p class="skill-description">Developing scripts to automate repetitive tasks and streamline processes, mainly using Bash and Python.</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon"><i class="fa-solid fa-skull"></i></div>
+                <h3 class="skill-title">Malware Development</h3>
+                <p class="skill-description">Exploring and studying how malicious software works to better understand threats and improve defenses.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="projects" id="projects">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-img">
+                    <i class="fa-solid fa-crow"></i> 
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">twt</h3>
+                    <div class="project-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">CLI</span>
+                        <span class="project-tag">Automation</span>
+                    </div>
+                    <p class="project-description">A small terminal-based tool to publish tweets directly from the command line. Useful for automating posts or experimenting with Twitter bots.</p>
+                    <a href="https://github.com/0xnotkyo/twt" target="_blank" class="project-link">Visit website <span>→</span></a>
+                </div>
+            </div>
+
+            
+            
+            <div class="project-card">
+                <div class="project-img">
+                    <i class="fa-solid fa-unlock" style="color: var(--bg-dark);"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">bandit_connect</h3> 
+                    <div class="project-tags">
+                        <span class="project-tag">Bash</span>
+                        <span class="project-tag">Wargame</span>
+                        <span class="project-tag">OverTheWire</span>
+                    </div>
+                    <p class="project-description">A helper script to easily connect to Bandit levels via SSH. Automates password handling and terminal setup for faster workflow.</p>
+                    <a href="https://github.com/0xnotkyo/bandit_connect" target="_blank" class="project-link">Visit website <span>→</span></a>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-img">
+                    <i class="fa-solid fa-person-digging" style="color: rgb(0, 0, 0);"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title"><span style="color:rgb(182, 182, 1)">Work in Progress... </span></h3> 
+                    <div class="project-tags">
+                        <span class="project-tag"></span>
+                        <span class="project-tag"></span>
+                        <span class="project-tag"></span>
+                    </div>
+                    <p class="project-description">🚧 In development.</p>
+                    <a href="https://github.com/0xnotkyo" target="_blank" class="project-link">Visit website <span>→</span></a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-img">
+                    <i class="fa-solid fa-person-digging" style="color: rgb(0, 0, 0);"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title"><span style="color:rgb(182, 182, 1)">Work in Progress... </span></h3> 
+                    <div class="project-tags">
+                        <span class="project-tag"></span>
+                        <span class="project-tag"></span>
+                        <span class="project-tag"></span>
+                    </div>
+                    <p class="project-description">🚧 In development.</p>
+                    <a href="https://github.com/0xnotkyo" target="_blank" class="project-link">Visit website <span>→</span></a>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-img">
+                    <i class="fa-solid fa-person-digging" style="color: rgb(0, 0, 0);"></i>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title"><span style="color:rgb(182, 182, 1)">Work in Progress... </span></h3> 
+                    <div class="project-tags">
+                        <span class="project-tag"> </span>
+                        <span class="project-tag"> </span>
+                        <span class="project-tag"> </span>
+                    </div>
+                    <p class="project-description">🚧 In development.</p>
+                    <a href="https://github.com/0xnotkyo" target="_blank" class="project-link">Visit website <span>→</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="connect" id="connect">
+        <h2 class="section-title">Contacts</h2>
+        <p>You can view more projects, interact with me, or read my blog using the buttons below:</p>
+        <div class="connect-icons">
+            <a href="https://github.com/0xnotkyo" class="connect-icon"><i class="fa-brands fa-github"></i></a>
+            <a href="https://x.com/0xnotkyo" class="connect-icon"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://0xnotkyo.gitbook.io/notes/" class="connect-icon"><i class="fa-solid fa-book"></i></a>
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2025 0xnotkyo all rights reserved <3 | <span class="highlight">Built with love</span></p>
+    </footer>
+    
+    <script>
+        const terminalContent = document.querySelector('.terminal-content');
+        const terminalCursor = document.createElement('span');
+        terminalCursor.classList.add('terminal-cursor');
+        terminalContent.appendChild(terminalCursor);
+        
+
+        window.addEventListener('scroll', function() {
+            const skillsSection = document.querySelector('#projects');
+            const skillsPosition = skillsSection.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.5;
+            
+            if (skillsPosition < screenPosition) {
+                document.body.classList.add('white-mode');
+            } else {
+                document.body.classList.remove('white-mode');
+            }
+        });
+    </script>
+</body>
+</html>
